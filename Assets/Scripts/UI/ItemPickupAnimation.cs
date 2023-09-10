@@ -7,7 +7,7 @@ namespace UI
     {
         [SerializeField] Canvas _canvas;
         [SerializeField] GameObject _prefab;
-        [SerializeField] List<RectTransformPair> _rectTransformPairs;
+        [SerializeField] List<ItemAnimationHelper.RectTransformPair> _rectTransformPairs;
 
         private ItemAnimationHelper _helper;
 
@@ -16,7 +16,7 @@ namespace UI
             _helper = new ItemAnimationHelper(Instantiate, Destroy);
             foreach (var t in _rectTransformPairs)
             {
-                AnimationParameter param = new AnimationParameter
+                var param = new ItemAnimationHelper.AnimationParameter
                 {
                     Canvas = _canvas,
                     Start = t._start,

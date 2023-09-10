@@ -6,24 +6,6 @@ using Cysharp.Threading.Tasks;
 
 namespace UI
 {
-    public class AnimationParameter
-    {
-        public Canvas Canvas { get; set; }
-        public RectTransform Start { get; set; }
-        public RectTransform End { get; set; }
-        public GameObject Prefab { get; set; }
-        public float InitialDelay { get; set; } = 0.2f;
-        public float Duration { get; set; } = 1.0f;
-        public int Copies { get; set; } = 10;
-    }
-
-    [Serializable]
-    public class RectTransformPair
-    {
-        public RectTransform _start;
-        public RectTransform _end;
-    }
-
     public class ItemAnimationHelper
     {
         private readonly Func<GameObject, Transform, GameObject> _instantiateFunc;
@@ -33,6 +15,24 @@ namespace UI
         {
             _instantiateFunc = instantiateFunc;
             _destroyAction = destroyAction;
+        }
+
+        public class AnimationParameter
+        {
+            public Canvas Canvas { get; set; }
+            public RectTransform Start { get; set; }
+            public RectTransform End { get; set; }
+            public GameObject Prefab { get; set; }
+            public float InitialDelay { get; set; } = 0.2f;
+            public float Duration { get; set; } = 1.0f;
+            public int Copies { get; set; } = 10;
+        }
+
+        [Serializable]
+        public class RectTransformPair
+        {
+            public RectTransform _start;
+            public RectTransform _end;
         }
 
         public async Task AnimateItemPickup(AnimationParameter param)
