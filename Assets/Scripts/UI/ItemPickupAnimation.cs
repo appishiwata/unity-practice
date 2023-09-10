@@ -12,9 +12,10 @@ namespace UI
         public RectTransform Start { get; set; }
         public RectTransform End { get; set; }
         public GameObject Prefab { get; set; }
-        public float InitialDelay { get; set; }
-        public float Duration { get; set; }
-        public int Copies { get; set; }
+
+        public float InitialDelay { get; set; } = 0.2f;
+        public float Duration { get; set; } = 1.0f;
+        public int Copies { get; set; } = 10;
     }
 
     public class ItemPickupAnimation : MonoBehaviour
@@ -33,26 +34,20 @@ namespace UI
                 Canvas = _canvas,
                 Start = _start1,
                 End = _end1,
-                Prefab = _prefab,
-                InitialDelay = 0.2f,
-                Duration = 1.0f,
-                Copies = 10
+                Prefab = _prefab
             };
-            await ItemAnimation(animationParameter);
+            await AnimateItemPickup(animationParameter);
             var animationParameter2 = new AnimationParameter
             {
                 Canvas = _canvas,
                 Start = _start2,
                 End = _end2,
-                Prefab = _prefab,
-                InitialDelay = 0.2f,
-                Duration = 1.0f,
-                Copies = 10
+                Prefab = _prefab
             };
-            await ItemAnimation(animationParameter2);
+            await AnimateItemPickup(animationParameter2);
         }
 
-        private async Task ItemAnimation(AnimationParameter param)
+        private async Task AnimateItemPickup(AnimationParameter param)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(param.InitialDelay));
             for (int i = 0; i < param.Copies; i++)
