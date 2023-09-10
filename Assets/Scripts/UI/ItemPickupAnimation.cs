@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class ItemPickupAnimation : MonoBehaviour
     {
+        [SerializeField] Button _button;
         [SerializeField] Canvas _canvas;
         [SerializeField] GameObject _prefab;
         [SerializeField] List<ItemAnimationHelper.RectTransformPair> _rectTransformPairs;
@@ -13,6 +16,8 @@ namespace UI
 
         async void Start()
         {
+            await _button.OnClickAsync();
+            
             _helper = new ItemAnimationHelper(Instantiate, Destroy);
             foreach (var t in _rectTransformPairs)
             {
