@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -21,30 +22,30 @@ namespace UI
     public class ItemPickupAnimation : MonoBehaviour
     {
         [SerializeField] Canvas _canvas;
-        [SerializeField] RectTransform _start1;
-        [SerializeField] RectTransform _end1;
-        [SerializeField] RectTransform _start2;
-        [SerializeField] RectTransform _end2;
         [SerializeField] GameObject _prefab;
+
+        [Serializable]
+        public class RectTransformPair
+        {
+            public RectTransform _start;
+            public RectTransform _end;
+        }
+        [SerializeField] List<RectTransformPair> _rectTransformPairs;
 
         public async void AnimateItemPickup()
         {
-            var animationParameter = new AnimationParameter
+            foreach (var t in _rectTransformPairs)
             {
-                Canvas = _canvas,
-                Start = _start1,
-                End = _end1,
-                Prefab = _prefab
-            };
-            await AnimateItemPickup(animationParameter);
-            var animationParameter2 = new AnimationParameter
-            {
-                Canvas = _canvas,
-                Start = _start2,
-                End = _end2,
-                Prefab = _prefab
-            };
-            await AnimateItemPickup(animationParameter2);
+                var animationParameter = new AnimationParameter
+                {
+                    Canvas = _canvas,
+                    Start = t._start,
+                    End = t._end,
+                    Prefab = _prefab
+                };
+
+                await AnimateItemPickup(animationParameter);
+            }
         }
 
         private async Task AnimateItemPickup(AnimationParameter param)
