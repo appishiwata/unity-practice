@@ -7,6 +7,17 @@ using DG.Tweening;
 
 namespace UI
 {
+    public class AnimationParameter
+    {
+        public Canvas Canvas { get; set; }
+        public RectTransform Start { get; set; }
+        public RectTransform End { get; set; }
+        public GameObject Prefab { get; set; }
+        public float InitialDelay { get; set; }
+        public float Duration { get; set; }
+        public int Copies { get; set; }
+    }
+
     public class ItemPickupAnimation : MonoBehaviour
     {
         [SerializeField] private RectTransform _prefab;
@@ -21,7 +32,17 @@ namespace UI
 
         public async void AnimateItemPickup()
         {
-            await ItemAnimation(_canvas, _start, _end, _item, 0.2f, 1f, 10);
+            var animationParameter = new AnimationParameter
+            {
+                Canvas = _canvas,
+                Start = _start,
+                End = _end,
+                Prefab = _item,
+                InitialDelay = 0.2f,
+                Duration = 1.0f,
+                Copies = 10
+            };
+            await ItemAnimation(animationParameter);
             //StartCoroutine(Animate());
         }
 
@@ -37,21 +58,21 @@ namespace UI
                 yield return new WaitForSeconds(_duration / _copies);
             }
         }
-        
-        private async Task ItemAnimation(Canvas canvas, RectTransform start, RectTransform end, GameObject prefab, float initialDelay, float duration, int copies)
+
+        private async Task ItemAnimation(AnimationParameter param)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(initialDelay));
-            for (int i = 0; i < copies; i++)
+            await UniTask.Delay(TimeSpan.FromSeconds(param.InitialDelay));
+            for (int i = 0; i < param.Copies; i++)
             {
-                var obj = Instantiate(prefab, canvas.transform);
-                obj.transform.position = start.position;
-                obj.transform.DOMove(end.position, duration)
+                var obj = Instantiate(param.Prefab, param.Canvas.transform);
+                obj.transform.position = param.Start.position;
+                obj.transform.DOMove(param.End.position, param.Duration)
                     .SetEase(Ease.InOutQuad)
                     .OnComplete(() =>
                     {
                         Destroy(obj);
                     });
-                await UniTask.Delay(TimeSpan.FromSeconds(duration / copies));
+                await UniTask.Delay(TimeSpan.FromSeconds(param.Duration / param.Copies));
             }
         }
     }
