@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -20,43 +19,37 @@ namespace UI
 
     public class ItemPickupAnimation : MonoBehaviour
     {
-        [SerializeField] private RectTransform _prefab;
-        [SerializeField] private RectTransform _target;
-        [SerializeField] private Canvas _canvas;
-        [SerializeField] private float _duration = 1f;
-        [SerializeField] private int _copies = 10;
-        
-        [SerializeField] RectTransform _start;
-        [SerializeField] RectTransform _end;
-        [SerializeField] GameObject _item;
+        [SerializeField] Canvas _canvas;
+        [SerializeField] RectTransform _start1;
+        [SerializeField] RectTransform _end1;
+        [SerializeField] RectTransform _start2;
+        [SerializeField] RectTransform _end2;
+        [SerializeField] GameObject _prefab;
 
         public async void AnimateItemPickup()
         {
             var animationParameter = new AnimationParameter
             {
                 Canvas = _canvas,
-                Start = _start,
-                End = _end,
-                Prefab = _item,
+                Start = _start1,
+                End = _end1,
+                Prefab = _prefab,
                 InitialDelay = 0.2f,
                 Duration = 1.0f,
                 Copies = 10
             };
             await ItemAnimation(animationParameter);
-            //StartCoroutine(Animate());
-        }
-
-        private IEnumerator Animate()
-        {
-            for (int i = 0; i < _copies; i++)
+            var animationParameter2 = new AnimationParameter
             {
-                var instance = Instantiate(_prefab, _canvas.transform);
-                instance.transform.DOMove(_target.position, _duration).SetEase(Ease.InOutQuad).OnComplete(() =>
-                {
-                    Destroy(instance.gameObject);
-                });
-                yield return new WaitForSeconds(_duration / _copies);
-            }
+                Canvas = _canvas,
+                Start = _start2,
+                End = _end2,
+                Prefab = _prefab,
+                InitialDelay = 0.2f,
+                Duration = 1.0f,
+                Copies = 10
+            };
+            await ItemAnimation(animationParameter2);
         }
 
         private async Task ItemAnimation(AnimationParameter param)
