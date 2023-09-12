@@ -4,4 +4,5 @@
     <ui:Button text="Button" display-tooltip-when-elided="true" class="sample-button" />
     <ui:Button text="Button" display-tooltip-when-elided="true" />
     <ui:Button text="Button" display-tooltip-when-elided="true" class="sample-button" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1304905567622442630&amp;guid=172213a05b9f34169b8a2b8dd82a6c7d&amp;type=3#arrow-down@2x&apos;); -unity-background-scale-mode: stretch-to-fill;" />
 </ui:UXML>
