@@ -1,5 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/style.uss?fileID=7433441132597879392&amp;guid=cf35a5f46968241d7b5111489d5e5937&amp;type=3#style" />
+    <Style src="project://database/Assets/UI%20Toolkit/style.uss?fileID=7433441132597879392&amp;guid=cf35a5f46968241d7b5111489d5e5937&amp;type=3#style" />
     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" />
+    <ui:Button text="Button" display-tooltip-when-elided="true" class="sample-button" />
+    <ui:Button text="Button" display-tooltip-when-elided="true" />
     <ui:Button text="Button" display-tooltip-when-elided="true" class="sample-button" />
 </ui:UXML>
