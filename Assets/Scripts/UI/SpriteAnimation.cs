@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +11,9 @@ namespace UI
         
         void Start()
         {
-            _slider.onValueChanged.AddListener(ChangeAnimatorSpeed);
-        }
-        
-        void ChangeAnimatorSpeed(float value)
-        {
-            _animator.speed = value;
+            _slider.ObserveEveryValueChanged(slider => slider.value)
+                .Subscribe(value => _animator.speed = value)
+                .AddTo(this);
         }
     }
 }
