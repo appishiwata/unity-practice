@@ -26,8 +26,6 @@ namespace UI
             _roofCloseButton.OnClickAsObservable()
                 .Subscribe(_ => _roofAnimator.SetBool("IsOpen", false))
                 .AddTo(this);
-            
-            // TODO 最初に一度だけアニメーションが実行されてしまう。
         }
     }
 }
