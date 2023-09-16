@@ -12,7 +12,8 @@ namespace UI
         [SerializeField] Animator _roofAnimator;
         [SerializeField] Button _roofOpenButton;
         [SerializeField] Button _roofCloseButton;
-        
+        private static readonly int IsOpen = Animator.StringToHash("IsOpen");
+
         void Start()
         {
             _slider.ObserveEveryValueChanged(slider => slider.value)
@@ -20,11 +21,11 @@ namespace UI
                 .AddTo(this);
 
             _roofOpenButton.OnClickAsObservable()
-                .Subscribe(_ => _roofAnimator.SetBool("IsOpen", true))
+                .Subscribe(_ => _roofAnimator.SetBool(IsOpen, true))
                 .AddTo(this);
 
             _roofCloseButton.OnClickAsObservable()
-                .Subscribe(_ => _roofAnimator.SetBool("IsOpen", false))
+                .Subscribe(_ => _roofAnimator.SetBool(IsOpen, false))
                 .AddTo(this);
         }
     }
