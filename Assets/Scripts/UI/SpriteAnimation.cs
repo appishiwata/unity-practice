@@ -13,6 +13,9 @@ namespace UI
         [SerializeField] Button _roofOpenButton;
         [SerializeField] Button _roofCloseButton;
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
+        
+        [SerializeField] Button _button;
+        [SerializeField] Image _panel;
 
         void Start()
         {
@@ -29,6 +32,10 @@ namespace UI
                 .AddTo(this);
             
             _roofAnimator.speed = 1.5f;
+            
+            _button.OnClickAsObservable()
+                .Subscribe(_ => _panel.gameObject.SetActive(false))
+                .AddTo(this);
         }
     }
 }
