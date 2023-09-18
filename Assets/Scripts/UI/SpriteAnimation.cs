@@ -27,6 +27,8 @@ namespace UI
             _roofCloseButton.OnClickAsObservable()
                 .Subscribe(_ => _roofAnimator.SetBool(IsOpen, false))
                 .AddTo(this);
+            
+            _roofAnimator.speed = 1.5f;
         }
     }
 }
