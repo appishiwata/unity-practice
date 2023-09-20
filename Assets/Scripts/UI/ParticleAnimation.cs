@@ -12,7 +12,11 @@ namespace UI
         void Start()
         {
             _button.OnClickAsObservable()
-                .Subscribe(_ => _particleSystem.gameObject.SetActive(true))
+                .Subscribe(_ =>
+                {
+                    _particleSystem.GetComponent<ParticleSystem>().Stop();
+                    _button.gameObject.SetActive(false);
+                })
                 .AddTo(this);
         }
     }
