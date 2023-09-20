@@ -14,10 +14,13 @@ namespace UI
             _button.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
-                    _particleSystem.GetComponent<ParticleSystem>().Stop();
+                    _particleSystem.Stop();
                     _button.gameObject.SetActive(false);
                 })
                 .AddTo(this);
+            
+            // TODO なぜかStopするとパーティクルが消えてしまう
+            // StopActionはNone
         }
     }
 }
