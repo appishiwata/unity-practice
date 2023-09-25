@@ -17,6 +17,14 @@ namespace UI
             _instantiateFunc = instantiateFunc;
             _destroyAction = destroyAction;
         }
+        
+        public class CounterParameter
+        {
+            public GameObject CounterObject { get; set; }
+            public TextMeshProUGUI CounterText { get; set; }
+            public float StartValue { get; set; } 
+            public float EndValue { get; set; }   
+        }
 
         public class AnimationParameter
         {
@@ -27,8 +35,7 @@ namespace UI
             public float InitialDelay { get; set; } = 0.2f;
             public float Duration { get; set; } = 1.0f;
             public int Copies { get; set; } = 10;
-            public GameObject CounterObject { get; set; }
-            public TextMeshProUGUI CounterText { get; set; }
+            public CounterParameter Counter { get; set; }
         }
 
         [Serializable]
@@ -38,10 +45,8 @@ namespace UI
             public RectTransform _end;
         }
 
-        public void AnimateNumberIncrease(float startValue, float increaseAmount, TextMeshProUGUI textComponent, float duration)
+        private void AnimateNumberIncrease(float startValue, float endValue, TextMeshProUGUI textComponent, float duration)
         {
-            float endValue = startValue + increaseAmount;
-            //textComponent.text = $"{Mathf.RoundToInt(startValue)}";
             DOVirtual.Float(startValue, endValue, duration, value =>
                 {
                     textComponent.text = $"{Mathf.RoundToInt(value)}";
@@ -53,9 +58,9 @@ namespace UI
         {
             await UniTask.Delay(TimeSpan.FromSeconds(param.InitialDelay));
 
-            if (param.CounterObject != null) {
-                param.CounterObject.SetActive(true);
-                AnimateNumberIncrease(0, 30, param.CounterText, param.Duration);
+            if (param.Counter != null) {
+                param.Counter.CounterObject.SetActive(true);
+                AnimateNumberIncrease(param.Counter.StartValue, param.Counter.EndValue, param.Counter.CounterText, param.Duration);
             }
 
             for (int i = 0; i < param.Copies; i++)
@@ -69,7 +74,10 @@ namespace UI
                         _destroyAction(obj);
                         if (i == param.Copies) {
                             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-                            if (param.CounterObject != null) param.CounterObject.SetActive(false);
+                            if (param.Counter != null)
+                            {
+                                param.Counter.CounterObject.SetActive(false);
+                            }
                         }
                     });
                 await UniTask.Delay(TimeSpan.FromSeconds(param.Duration / param.Copies));

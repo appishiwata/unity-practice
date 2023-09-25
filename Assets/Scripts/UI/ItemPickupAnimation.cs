@@ -21,14 +21,20 @@ namespace UI
             await _button.OnClickAsync();
             
             _helper = new ItemAnimationHelper(Instantiate, Destroy);
+            var counterParam = new ItemAnimationHelper.CounterParameter
+            {
+                CounterObject = _counterObject,
+                CounterText = _counterText,
+                StartValue = 0,
+                EndValue = 10
+            };
             var param = new ItemAnimationHelper.AnimationParameter
             {
                 Canvas = _canvas,
                 Start = _rectTransformPairs._start,
                 End = _rectTransformPairs._end,
                 Prefab = _prefab,
-                CounterObject = _counterObject,
-                CounterText = _counterText
+                Counter = counterParam
             };
             
             await _helper.AnimateItemPickup(param);
