@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +10,9 @@ namespace UI
         [SerializeField] Button _button;
         [SerializeField] Canvas _canvas;
         [SerializeField] GameObject _prefab;
-        [SerializeField] List<ItemAnimationHelper.RectTransformPair> _rectTransformPairs;
+        [SerializeField] GameObject _counterObject;
+        [SerializeField] TextMeshProUGUI _counterText;
+        [SerializeField] ItemAnimationHelper.RectTransformPair _rectTransformPairs;
 
         private ItemAnimationHelper _helper;
 
@@ -19,18 +21,17 @@ namespace UI
             await _button.OnClickAsync();
             
             _helper = new ItemAnimationHelper(Instantiate, Destroy);
-            foreach (var t in _rectTransformPairs)
+            var param = new ItemAnimationHelper.AnimationParameter
             {
-                var param = new ItemAnimationHelper.AnimationParameter
-                {
-                    Canvas = _canvas,
-                    Start = t._start,
-                    End = t._end,
-                    Prefab = _prefab
-                };
-                
-                await _helper.AnimateItemPickup(param);
-            }
+                Canvas = _canvas,
+                Start = _rectTransformPairs._start,
+                End = _rectTransformPairs._end,
+                Prefab = _prefab,
+                CounterObject = _counterObject,
+                CounterText = _counterText
+            };
+            
+            await _helper.AnimateItemPickup(param);
         }
     }
 }
