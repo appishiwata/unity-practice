@@ -1,18 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MultiMethodButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] Button _button;
+    
+    public static Subject<string> OnClickedButtonMethod1 = new();
+    public static Subject<string> OnClickedButtonMethod2 = new();
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        _button.OnClickAsObservable()
+            .Subscribe(_ =>
+            {
+                OnClickedButtonMethod1.OnNext("Method1");
+                OnClickedButtonMethod2.OnNext("Method2");
+            });
     }
 }
