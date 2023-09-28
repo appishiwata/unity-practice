@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,24 @@ namespace UI
 
         async void Start()
         {
+            MultiMethodButton.OnClickedButtonMethod1.Subscribe(data =>
+            {
+                Debug.Log($"Method1: {data}");
+            });
+            MultiMethodButton.OnClickedButtonMethod2.Subscribe(data =>
+            {
+                Debug.Log($"Method2: {data}");
+            });
+
+            // TODO usingを使っていると呼ばれない 調査
+            using(MultiMethodButton.OnClickedButtonMethod1.Subscribe(data =>
+            {
+                Debug.Log($"Method1: {data}");
+            }))
+            {
+                Debug.Log("Method1: Subscribed");
+            }
+            
             await _button.OnClickAsync();
             
             _helper = new ItemAnimationHelper(Instantiate, Destroy);
