@@ -8,6 +8,7 @@ public class BackgroundScroll : MonoBehaviour
 {
     [SerializeField] Image _bgYokonaga;
     [SerializeField] Image _bgTatenaga;
+    [SerializeField] Image _bgRepeat;
     
     void Start()
     {
@@ -20,6 +21,13 @@ public class BackgroundScroll : MonoBehaviour
         // 縦長画像
         // 画像自体を動かす 端まで行ったら戻る設定
         _bgTatenaga.transform.DOLocalMoveX(-400f, 10f)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear);
+
+        // 縦長画像
+        // 画像自体を動かす 端まで行ったら戻る設定
+        // 画像をTiledに設定、Widthを2倍にして、もとのWidth分画像を左に配置、そのWidthの半分動かす
+        _bgRepeat.transform.DOLocalMoveX(-540f, 10f)
             .SetLoops(-1, LoopType.Restart)
             .SetEase(Ease.Linear);
     }
